@@ -36,6 +36,6 @@ class Scenario:
     route: Route
     stations: List[Station] = field(default_factory=list)
     buses: List[Bus] = field(default_factory=list)
-    battery_range: float = 240.0
+    battery_range: int = 240
     charging_time: int = 25
     weights: Dict[str, float] = field(default_factory=dict)
