@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+.idea/
+.vscode/
+
+.streamlit/
+
+SDE_assesment_-_May_2026.pdf
