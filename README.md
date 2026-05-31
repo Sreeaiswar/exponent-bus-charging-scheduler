@@ -215,6 +215,8 @@ Select a scenario from the sidebar to view its inputs, per-bus schedules, and pe
 
 https://bus-charging-scheduler-ekva7u9sguk4cxapppzqz7j.streamlit.app
 
+---
+
 ## Key Design Decisions
 
 ### Centralized Route Geometry
