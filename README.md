@@ -88,7 +88,7 @@
       ## Project Structure
 
       ```text
-      project/
+      exponent-bus-charging-scheduler/
       │
       ├── models/
       │   ├── bus.py
@@ -210,6 +210,10 @@
       Select a scenario from the sidebar to view its inputs, per-bus schedules, and per-station charger occupancy.
 
       ---
+
+      ## Live Demo
+
+      https://bus-charging-scheduler-ekva7u9sguk4cxapppzqz7j.streamlit.app    
 
       ## Key Design Decisions
 
