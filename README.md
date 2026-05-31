@@ -1,325 +1,325 @@
-      # Exponent Bus Charging Scheduler
+# Exponent Bus Charging Scheduler
 
-      A scheduling system for electric buses operating on a shared bidirectional route with limited charging infrastructure.
+A scheduling system for electric buses operating on a shared bidirectional route with limited charging infrastructure.
 
-      The scheduler generates feasible charging plans for each bus, selects plans using a congestion-aware strategy, and simulates charger usage using an event-driven simulation engine.
+The scheduler generates feasible charging plans for each bus, selects plans using a congestion-aware strategy, and simulates charger usage using an event-driven simulation engine.
 
-      This project was built as part of the Exponent Energy Software Development Engineer assignment.
+This project was built as part of the Exponent Energy Software Development Engineer assignment.
 
-      ---
+---
 
-      ## Problem Statement
+## Problem Statement
 
-      A fleet of electric buses operates between two endpoints on a fixed route.
+A fleet of electric buses operates between two endpoints on a fixed route.
 
-      Each bus:
+Each bus:
 
-      - Has a finite battery range
-      - Must charge at intermediate stations
-      - Shares charging infrastructure with other buses
-      - Can only occupy one charger at a time
+- Has a finite battery range
+- Must charge at intermediate stations
+- Shares charging infrastructure with other buses
+- Can only occupy one charger at a time
 
-      The scheduler must:
+The scheduler must:
 
-      1. Determine where each bus should charge.
-      2. Ensure no bus exceeds battery range constraints.
-      3. Resolve charger contention.
-      4. Produce a complete charging timeline for the fleet.
-      5. Generate station occupancy schedules.
+1. Determine where each bus should charge.
+2. Ensure no bus exceeds battery range constraints.
+3. Resolve charger contention.
+4. Produce a complete charging timeline for the fleet.
+5. Generate station occupancy schedules.
 
-      ---
+---
 
-      ## Features
+## Features
 
-      - Scenario-driven scheduling
-      - Bidirectional route support
-      - Automatic charging plan generation
-      - Congestion-aware plan selection
-      - Event-driven charger simulation
-      - Multi-charger station support
-      - Deterministic scheduling
-      - Extensible architecture
-      - Data-driven route and station configuration
-      - End-to-end validation using multiple scenarios
+- Scenario-driven scheduling
+- Bidirectional route support
+- Automatic charging plan generation
+- Congestion-aware plan selection
+- Event-driven charger simulation
+- Multi-charger station support
+- Deterministic scheduling
+- Extensible architecture
+- Data-driven route and station configuration
+- End-to-end validation using multiple scenarios
 
-      ---
+---
 
-      ## Architecture Overview
+## Architecture Overview
 
-      The scheduling pipeline consists of:
+The scheduling pipeline consists of:
 
-      ```text
-      Scenario JSON
-            │
-            ▼
-      Loader
-            │
-            ▼
-      Scenario
-            │
-            ▼
-      Plan Generator
-            │
-            ▼
-      Scheduler Engine
-            │
-            ▼
-      Simulator
-            │
-            ▼
-      Streamlit UI
-      ```
-
-      ### Module Responsibilities
-
-      | Module | Responsibility |
-      |----------|---------------|
-      | `scheduler/loader.py` | Parse and validate scenario files |
-      | `scheduler/route_utils.py` | Shared route geometry calculations |
-      | `scheduler/plan_generator.py` | Generate all valid charging plans |
-      | `scheduler/engine.py` | Select charging plans and orchestrate scheduling |
-      | `scheduler/simulator.py` | Execute event-driven charging simulation |
-      | `models/` | Domain models and data structures |
-
-      For a detailed explanation of design decisions and algorithms, see `ARCHITECTURE.md`.
-
-      ---
-
-      ## Project Structure
-
-      ```text
-      exponent-bus-charging-scheduler/
+```text
+Scenario JSON
       │
-      ├── models/
-      │   ├── bus.py
-      │   ├── route.py
-      │   ├── scenario.py
-      │   └── station.py
+      ▼
+Loader
       │
-      ├── scheduler/
-      │   ├── loader.py
-      │   ├── route_utils.py
-      │   ├── plan_generator.py
-      │   ├── engine.py
-      │   └── simulator.py
+      ▼
+Scenario
       │
-      ├── scenarios/
-      │   ├── scenario1.json
-      │   ├── scenario2.json
-      │   ├── scenario3.json
-      │   ├── scenario4.json
-      │   └── scenario5.json
+      ▼
+Plan Generator
       │
-      ├── ARCHITECTURE.md
-      ├── README.md
-      ├── requirements.txt
-      └── app.py
-      ```
+      ▼
+Scheduler Engine
+      │
+      ▼
+Simulator
+      │
+      ▼
+Streamlit UI
+```
 
-      ---
+### Module Responsibilities
 
-      ## Scenario Descriptions
+| Module | Responsibility |
+|----------|---------------|
+| `scheduler/loader.py` | Parse and validate scenario files |
+| `scheduler/route_utils.py` | Shared route geometry calculations |
+| `scheduler/plan_generator.py` | Generate all valid charging plans |
+| `scheduler/engine.py` | Select charging plans and orchestrate scheduling |
+| `scheduler/simulator.py` | Execute event-driven charging simulation |
+| `models/` | Domain models and data structures |
 
-      ### Scenario 1 – Even Spacing
+For a detailed explanation of design decisions and algorithms, see `ARCHITECTURE.md`.
 
-      Baseline scenario with evenly spaced departures and moderate charger utilization.
+---
 
-      ### Scenario 2 – Bunched Departures
+## Project Structure
 
-      Multiple buses depart around the same time, increasing charger contention.
+```text
+exponent-bus-charging-scheduler/
+│
+├── models/
+│   ├── bus.py
+│   ├── route.py
+│   ├── scenario.py
+│   └── station.py
+│
+├── scheduler/
+│   ├── loader.py
+│   ├── route_utils.py
+│   ├── plan_generator.py
+│   ├── engine.py
+│   └── simulator.py
+│
+├── scenarios/
+│   ├── scenario1.json
+│   ├── scenario2.json
+│   ├── scenario3.json
+│   ├── scenario4.json
+│   └── scenario5.json
+│
+├── ARCHITECTURE.md
+├── README.md
+├── requirements.txt
+└── app.py
+```
 
-      ### Scenario 3 – Asymmetric Load
+---
 
-      Uneven directional traffic creates different charging demands across stations.
+## Scenario Descriptions
 
-      ### Scenario 4 – Operator-Heavy Fleet
+### Scenario 1 – Even Spacing
 
-      Fleet composition emphasizes a particular operator to test fairness-related extensions.
+Baseline scenario with evenly spaced departures and moderate charger utilization.
 
-      ### Scenario 5 – Worst-Case Convergence
+### Scenario 2 – Bunched Departures
 
-      Large numbers of buses converge on the same charging stations, creating significant contention.
+Multiple buses depart around the same time, increasing charger contention.
 
-      ---
+### Scenario 3 – Asymmetric Load
 
-      ## Setup
+Uneven directional traffic creates different charging demands across stations.
 
-      ### Create Virtual Environment
+### Scenario 4 – Operator-Heavy Fleet
 
-      ```bash
-      python -m venv .venv
-      ```
+Fleet composition emphasizes a particular operator to test fairness-related extensions.
 
-      ### Activate Virtual Environment
+### Scenario 5 – Worst-Case Convergence
 
-      #### Linux / macOS
+Large numbers of buses converge on the same charging stations, creating significant contention.
 
-      ```bash
-      source .venv/bin/activate
-      ```
+---
 
-      #### Windows
+## Setup
 
-      ```bash
-      .venv\Scripts\activate
-      ```
+### Create Virtual Environment
 
-      ### Install Dependencies
+```bash
+python -m venv .venv
+```
 
-      ```bash
-      pip install -r requirements.txt
-      ```
+### Activate Virtual Environment
 
-      ---
+#### Linux / macOS
 
-      ## Running a Scenario
+```bash
+source .venv/bin/activate
+```
 
-      Example usage:
+#### Windows
 
-      ```python
-      from scheduler.loader import load_scenario
-      from scheduler.engine import Engine
+```bash
+.venv\Scripts\activate
+```
 
-      scenario = load_scenario("scenarios/scenario1.json")
+### Install Dependencies
 
-      engine = Engine(scenario)
-      result = engine.run()
+```bash
+pip install -r requirements.txt
+```
 
-      print(result.chosen_plans)
-      print(result.infeasible_buses)
-      ```
+---
 
-      The generated `ScheduleResult` contains:
+## Running a Scenario
 
-      - Selected charging plans
-      - Per-bus timelines
-      - Station occupancy schedules
-      - Infeasible bus information
-      - Scenario metadata and weights
+Example usage:
 
-      ---
+```python
+from scheduler.loader import load_scenario
+from scheduler.engine import Engine
 
-      ## Launch UI
+scenario = load_scenario("scenarios/scenario1.json")
 
-      A Streamlit interface is provided for visualizing scheduling results. Launch it with:
+engine = Engine(scenario)
+result = engine.run()
 
-      ```bash
-      streamlit run app.py
-      ```
+print(result.chosen_plans)
+print(result.infeasible_buses)
+```
 
-      Select a scenario from the sidebar to view its inputs, per-bus schedules, and per-station charger occupancy.
+The generated `ScheduleResult` contains:
 
-      ---
+- Selected charging plans
+- Per-bus timelines
+- Station occupancy schedules
+- Infeasible bus information
+- Scenario metadata and weights
 
-      ## Live Demo
+---
 
-      https://bus-charging-scheduler-ekva7u9sguk4cxapppzqz7j.streamlit.app    
+## Launch UI
 
-      ## Key Design Decisions
+A Streamlit interface is provided for visualizing scheduling results. Launch it with:
 
-      ### Centralized Route Geometry
+```bash
+streamlit run app.py
+```
 
-      Route distance calculations are implemented in `route_utils.py` and shared across all modules to ensure consistency.
+Select a scenario from the sidebar to view its inputs, per-bus schedules, and per-station charger occupancy.
 
-      ### DFS-Based Plan Generation
+---
 
-      Valid charging plans are generated using depth-first search with range-based pruning.
+## Live Demo
 
-      ### Greedy Congestion-Aware Selection
+https://bus-charging-scheduler-ekva7u9sguk4cxapppzqz7j.streamlit.app
 
-      The scheduler chooses plans using:
+## Key Design Decisions
 
-      1. Fewest charging stops
-      2. Lowest estimated congestion
-      3. Deterministic tie-breaking
+### Centralized Route Geometry
 
-      ### Event-Driven Simulation
+Route distance calculations are implemented in `route_utils.py` and shared across all modules to ensure consistency.
 
-      Only meaningful events are processed:
+### DFS-Based Plan Generation
 
-      - Departure
-      - Station Arrival
-      - Charge Start
-      - Charge End
-      - Destination Arrival
+Valid charging plans are generated using depth-first search with range-based pruning.
 
-      This avoids unnecessary minute-by-minute simulation.
+### Greedy Congestion-Aware Selection
 
-      ### FCFS Charger Allocation
+The scheduler chooses plans using:
 
-      Charging stations currently use First-Come-First-Served queueing, with clear extension points for future weighted prioritization.
+1. Fewest charging stops
+2. Lowest estimated congestion
+3. Deterministic tie-breaking
 
-      ---
+### Event-Driven Simulation
 
-      ## Assumptions
+Only meaningful events are processed:
 
-      - Battery range is fixed per scenario.
-      - Charging always fills the battery to 100%.
-      - Charging duration is constant.
-      - Buses start fully charged.
-      - Travel speed is constant at 60 km/h.
-      - Endpoints do not contain charging stations.
-      - Routes are linear with no branching paths.
-      - All scenario information is known before scheduling begins.
+- Departure
+- Station Arrival
+- Charge Start
+- Charge End
+- Destination Arrival
 
-      ---
+This avoids unnecessary minute-by-minute simulation.
 
-      ## Testing
+### FCFS Charger Allocation
 
-      The scheduler has been validated against all five provided scenarios.
+Charging stations currently use First-Come-First-Served queueing, with clear extension points for future weighted prioritization.
 
-      Verification includes:
+---
 
-      - Scenario loading and validation
-      - Charging plan generation
-      - Plan selection
-      - Event-driven simulation
-      - Charger contention handling
-      - Arrival of all feasible buses
-      - Deterministic execution across repeated runs
+## Assumptions
 
-      ---
+- Battery range is fixed per scenario.
+- Charging always fills the battery to 100%.
+- Charging duration is constant.
+- Buses start fully charged.
+- Travel speed is constant at 60 km/h.
+- Endpoints do not contain charging stations.
+- Routes are linear with no branching paths.
+- All scenario information is known before scheduling begins.
 
-      ## Current Limitations
+---
 
-      - Soft-rule weights are not yet incorporated into scheduling decisions.
-      - Plan selection uses a greedy heuristic rather than global optimization.
-      - Congestion estimation is performed before simulation and does not account for cascading delays.
-      - Charging priority is fixed to FCFS.
-      - Travel speed is constant.
-      - Partial charging is not supported.
-      - The current Streamlit UI focuses on visualization and does not support interactive scenario editing.
+## Testing
 
-      ---
+The scheduler has been validated against all five provided scenarios.
 
-      ## Future Improvements
+Verification includes:
 
-      - Weighted plan selection using scenario weights
-      - Priority-based charger allocation
-      - Dynamic speed and traffic modelling
-      - Partial charging support
-      - Real-time schedule adjustments
-      - Interactive scenario editing
-      - Automated unit and integration tests
+- Scenario loading and validation
+- Charging plan generation
+- Plan selection
+- Event-driven simulation
+- Charger contention handling
+- Arrival of all feasible buses
+- Deterministic execution across repeated runs
 
-      ---
+---
 
-      ## Design Documentation
+## Current Limitations
 
-      A detailed engineering design document is available in:
+- Soft-rule weights are not yet incorporated into scheduling decisions.
+- Plan selection uses a greedy heuristic rather than global optimization.
+- Congestion estimation is performed before simulation and does not account for cascading delays.
+- Charging priority is fixed to FCFS.
+- Travel speed is constant.
+- Partial charging is not supported.
+- The current Streamlit UI focuses on visualization and does not support interactive scenario editing.
 
-      ```text
-      ARCHITECTURE.md
-      ```
+---
 
-      This document explains:
+## Future Improvements
 
-      - System architecture
-      - Domain model
-      - Charging plan generation
-      - Scheduling strategy
-      - Event-driven simulation
-      - Complexity analysis
-      - Scalability considerations
-      - Testing approach
-      - Current limitations
+- Weighted plan selection using scenario weights
+- Priority-based charger allocation
+- Dynamic speed and traffic modelling
+- Partial charging support
+- Real-time schedule adjustments
+- Interactive scenario editing
+- Automated unit and integration tests
+
+---
+
+## Design Documentation
+
+A detailed engineering design document is available in:
+
+```text
+ARCHITECTURE.md
+```
+
+This document explains:
+
+- System architecture
+- Domain model
+- Charging plan generation
+- Scheduling strategy
+- Event-driven simulation
+- Complexity analysis
+- Scalability considerations
+- Testing approach
+- Current limitations
